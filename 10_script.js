@@ -1,10 +1,12 @@
-// Toggle Filter Form visibility
+// Show/hide the Filter form
 function showFilter() {
     const filterForm = document.getElementById("filterContent");
     const newContentForm = document.getElementById("newContent");
-    // Hide the add form if open
+
+    // Close the Add New form if it is open
     newContentForm.style.display = "none";
-    // Toggle filter form
+
+    // Toggle the filter form
     if (filterForm.style.display === "none" || filterForm.style.display === "") {
         filterForm.style.display = "block";
     } else {
@@ -12,13 +14,15 @@ function showFilter() {
     }
 }
 
-// Toggle Add New Article Form visibility
+// Show/hide the Add New Article form
 function showAddNew() {
     const newContentForm = document.getElementById("newContent");
     const filterForm = document.getElementById("filterContent");
-    // Hide filter form if open
+
+    // Close the filter form if it is open
     filterForm.style.display = "none";
-    // Toggle add form
+
+    // Toggle the add new form
     if (newContentForm.style.display === "none" || newContentForm.style.display === "") {
         newContentForm.style.display = "flex";
     } else {
@@ -26,12 +30,14 @@ function showAddNew() {
     }
 }
 
-// Filter Articles based on checkboxes
+// Filter articles based on which checkboxes are checked
 function filterArticles() {
     const showOpinion = document.getElementById("opinionCheckbox").checked;
     const showRecipe = document.getElementById("recipeCheckbox").checked;
     const showUpdate = document.getElementById("updateCheckbox").checked;
+
     const articles = document.querySelectorAll("#articleList article");
+
     articles.forEach(function(article) {
         if (article.classList.contains("opinion")) {
             article.style.display = showOpinion ? "block" : "none";
@@ -43,13 +49,15 @@ function filterArticles() {
     });
 }
 
-// Add a New Article to the list
+// Add a new article to the list
 function addNewArticle() {
     const title = document.getElementById("inputHeader").value;
     const text = document.getElementById("inputArticle").value;
-    // Find which radio button is selected
+
+    // Determine the selected article type
     let type = "";
     let markerLabel = "";
+
     if (document.getElementById("opinionRadio").checked) {
         type = "opinion";
         markerLabel = "Opinion";
@@ -60,28 +68,34 @@ function addNewArticle() {
         type = "update";
         markerLabel = "Update";
     }
-    // Basic validation
+
+    // Validate inputs before adding
     if (!title || !text || !type) {
-        alert("Please fill in all fields and select an article type.");
+        alert("Please fill in the title, text, and select an article type.");
         return;
     }
-    // Build the new article element
+
+    // Create the new article element
     const newArticle = document.createElement("article");
     newArticle.classList.add(type);
+
     newArticle.innerHTML = `
         <span class="marker">${markerLabel}</span>
         <h2>${title}</h2>
         <p>${text}</p>
         <p><a href="moreDetails.html">Read more...</a></p>
     `;
-    // Append to the article list
+
+    // Add the new article to the article list
     document.getElementById("articleList").appendChild(newArticle);
-    // Clear the form inputs
+
+    // Reset all form fields
     document.getElementById("inputHeader").value = "";
     document.getElementById("inputArticle").value = "";
     document.getElementById("opinionRadio").checked = false;
     document.getElementById("recipeRadio").checked = false;
     document.getElementById("lifeRadio").checked = false;
-    // Hide the form after submitting
+
+    // Hide the form after submission
     document.getElementById("newContent").style.display = "none";
 }
